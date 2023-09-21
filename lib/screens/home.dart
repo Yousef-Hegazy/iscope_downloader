@@ -21,6 +21,7 @@ class Home extends ConsumerWidget {
   const Home({super.key});
 
   void _handleDownloadClick(WidgetRef ref, BuildContext context) async {
+    // Todo: Refactor this
     try {
       final String? filePath = ref.watch(fileProvider)?.path;
 
