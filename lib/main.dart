@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:iscope_downloader/screens/home.dart';
+import 'package:iscope_downloader/features/home/presentation/screens/home.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
