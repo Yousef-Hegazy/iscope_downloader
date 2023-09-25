@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:iscope_downloader/features/home/data/models/project_data_model.dart';
+import 'package:iscope_downloader/secrets.dart';
 
 class RemoteDataSource {
   static Future<Uint8List?> downloadFile({required String? url}) async {
@@ -24,8 +25,7 @@ class RemoteDataSource {
 
   static Future<List<ProjectDataModel>> fetchProjectsData() async {
     try {
-      final response = await http
-          .get(Uri.parse("https://localhost:7026/api/ProjectsDocuments"));
+      final response = await http.get(Uri.parse(iScopeApi));
 
       if (response.statusCode != 200) {
         debugPrint(
