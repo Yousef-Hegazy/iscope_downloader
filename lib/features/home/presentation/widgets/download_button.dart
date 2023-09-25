@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:iscope_downloader/features/home/domain/usecases/download_and_create_xml_usecase.dart';
 import 'package:iscope_downloader/features/home/presentation/providers/providers.dart';
 
 class DownloadButton extends ConsumerWidget {
@@ -12,8 +13,10 @@ class DownloadButton extends ConsumerWidget {
   void _handleDownloadClick(BuildContext context, WidgetRef ref) async {
     try {
       final filePath = ref.watch(fileProvider);
+      final dataSource = ref.watch(dataSourceProvider);
 
-      if (filePath == null || filePath.isEmpty) {
+      if (dataSource == DataSources.excel &&
+          (filePath == null || filePath.isEmpty)) {
         ScaffoldMessenger.of(context).clearSnackBars();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -55,7 +58,7 @@ class DownloadButton extends ConsumerWidget {
         }
       }
     } catch (e) {
-      debugPrint(e.toString());
+      debugPrint('_handleDownloadClick: ${e.toString()}');
     }
   }
 

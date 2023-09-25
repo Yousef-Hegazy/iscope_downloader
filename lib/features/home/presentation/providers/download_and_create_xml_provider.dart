@@ -59,7 +59,7 @@ class DownloadAndCreateXmlNotifier extends StateNotifier<DownloadState> {
     final logMessage = _ref.read(logProvider.notifier).addMessage;
     final projects = await _ref.read(projectsDataProvider.future);
 
-    state = state.copyWith(total: projects.length);
+    if (projects.isNotEmpty) state = state.copyWith(total: projects.length);
 
     final startDate = DateFormat('dd/MM/yyyy HH:mm:ss').format(DateTime.now());
 

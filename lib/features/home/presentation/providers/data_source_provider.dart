@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iscope_downloader/features/home/domain/usecases/download_and_create_xml_usecase.dart';
 
 class DataSourceNotifier extends StateNotifier<DataSources> {
-  DataSourceNotifier() : super(DataSources.excel);
+  DataSourceNotifier() : super(DataSources.database);
 
   void setDataSource(DataSources newSource) {
     if (newSource != state) state = newSource;

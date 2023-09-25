@@ -33,7 +33,7 @@ class SaveLogButton extends ConsumerWidget {
         );
       }
     } catch (e) {
-      debugPrint(e.toString());
+      debugPrint('_saveLog: ${e.toString()}');
     }
   }
 

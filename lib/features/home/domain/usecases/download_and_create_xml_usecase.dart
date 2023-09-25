@@ -26,8 +26,8 @@ class DownloadAndCreateXmlUseCase {
 
   Future<String> _createXml(ProjectDataEntity project) async {
     try {
-      final xmlFile =
-          File('$downloadDirectory\\${project.fileName.split('.')[0]}.xml');
+      final xmlFile = File(
+          '$downloadDirectory\\${project.documentFileName?.split('.')[0]}.xml');
 
       if (await xmlFile.exists()) {
         return '$logSeparator\n${xmlFile.path} already exists';
@@ -35,11 +35,13 @@ class DownloadAndCreateXmlUseCase {
 
       final XmlBuilder builder = XmlBuilder();
 
-      project.otherData.forEach((key, value) async {
+      project.toMap().forEach((key, value) async {
         builder.element(key, nest: () {
-          if (value.isNotEmpty) {
-            builder.text(value);
-          }
+          if (value == null ||
+              (value is String && value.isEmpty) ||
+              (value is int && value == 0) ||
+              (value is double && value == 0.0)) return;
+          builder.text(value.toString());
         });
       });
 
@@ -52,31 +54,32 @@ class DownloadAndCreateXmlUseCase {
 
       return '$logSeparator\n${xmlFile.path} Done';
     } catch (e) {
-      debugPrint(e.toString());
+      debugPrint('failed to create xml: ${e.toString()}');
       return e.toString();
     }
   }
 
   Future<String> _downloadFile(ProjectDataEntity project) async {
     try {
-      final downloadFile = File('$downloadDirectory\\${project.fileName}');
+      final downloadFile =
+          File('$downloadDirectory\\${project.documentFileName}');
 
       if (await downloadFile.exists()) {
         return '${downloadFile.path} already exists';
       }
 
       final Uint8List? fileBytes =
-          await RemoteDataSource.downloadFile(url: project.url);
+          await RemoteDataSource.downloadFile(url: project.documentUrl);
 
       if (fileBytes == null) {
-        return 'Failed to download file from ${project.url}';
+        return 'Failed to download file from ${project.documentUrl}';
       }
 
       await downloadFile.writeAsBytes(fileBytes);
 
       return '${downloadFile.path} Done';
     } catch (e) {
-      debugPrint(e.toString());
+      debugPrint('failed to download file: ${e.toString()}');
       return e.toString();
     }
   }
