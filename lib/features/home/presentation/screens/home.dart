@@ -28,7 +28,7 @@ class Home extends StatelessWidget {
                       height: 20,
                     ),
                     const Text(
-                      "اداة نسخ الوثائق من نظام iScope  عن طريق تحديد ملف اكسيل يحتوى مسار الملفات بالاضافة الى انشاء ملف XML  بخصائص كل وثيقة",
+                      "اداة نسخ الوثائق من نظام iScope بالاضافة الى انشاء ملف XML  بخصائص كل وثيقة",
                       textAlign: TextAlign.justify,
                       style: TextStyle(
                         fontSize: 18,

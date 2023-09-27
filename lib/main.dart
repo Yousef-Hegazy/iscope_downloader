@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Downloader',
+      title: 'IScope Documents Integration',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.grey.shade300),
         useMaterial3: true,
