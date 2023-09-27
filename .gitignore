@@ -45,3 +45,4 @@ app.*.map.json
 
 # secrets
 lib/secrets.dart
+assets/data/config.json
