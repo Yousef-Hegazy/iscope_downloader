@@ -26,9 +26,11 @@ class RemoteDataSource {
   static Future<List<ProjectDataModel>> fetchProjectsData() async {
     try {
       final jsonData = await rootBundle.loadString("assets/data/config.json");
-      final iScopeApi = jsonDecode(jsonData)['iScopeApi'];
+      final decoded = jsonDecode(jsonData);
+      final iScopeApi = decoded['iScopeApi'];
+      final documentsRoute = decoded['documentsRoute'];
 
-      final response = await http.get(Uri.parse(iScopeApi));
+      final response = await http.get(Uri.parse('$iScopeApi/$documentsRoute'));
 
       if (response.statusCode != 200) {
         debugPrint(

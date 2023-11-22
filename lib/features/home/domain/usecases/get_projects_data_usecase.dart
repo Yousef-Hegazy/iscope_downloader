@@ -61,6 +61,8 @@ class GetProjectsDataUseCase {
               projectCode: project.projectCode,
               contactNumber: project.contactNumber,
               documentCode: project.documentCode,
+              projectDocumentId: project.projectDocumentId,
+              codeOutSystemClass: project.codeOutSystemClass,
               mFilePass: project.mFilePass,
               documentName: project.documentName,
               documentUrl: project.documentUrl,
@@ -69,6 +71,7 @@ class GetProjectsDataUseCase {
               documentProcessEndDate: project.documentProcessEndDate,
               documentProcessDuration: project.documentProcessDuration,
               documentProcessCost: project.documentProcessCost,
+              codeEtimad: project.codeEtimad,
             ),
           )
           .toList();

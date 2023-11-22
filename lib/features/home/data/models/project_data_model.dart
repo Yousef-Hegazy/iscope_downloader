@@ -1,9 +1,14 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
+
 class ProjectDataModel {
   final int? projectId;
   final String? projectName;
   final String? projectCode;
   final String? contactNumber;
   final String? documentCode;
+  final int? projectDocumentId;
+  final String? codeOutSystemClass;
   final String? mFilePass;
   final String? documentName;
   final String? documentUrl;
@@ -12,62 +17,25 @@ class ProjectDataModel {
   final String? documentProcessEndDate;
   final int? documentProcessDuration;
   final double? documentProcessCost;
-
-  const ProjectDataModel({
-    required this.projectId,
-    required this.projectName,
-    required this.projectCode,
-    required this.contactNumber,
-    required this.documentCode,
-    required this.mFilePass,
-    required this.documentName,
-    required this.documentUrl,
-    required this.documentFileName,
-    required this.documentProcessStartDate,
-    required this.documentProcessEndDate,
-    required this.documentProcessDuration,
-    required this.documentProcessCost,
+  final String? codeEtimad;
+  ProjectDataModel({
+    this.projectId,
+    this.projectName,
+    this.projectCode,
+    this.contactNumber,
+    this.documentCode,
+    this.projectDocumentId,
+    this.codeOutSystemClass,
+    this.mFilePass,
+    this.documentName,
+    this.documentUrl,
+    this.documentFileName,
+    this.documentProcessStartDate,
+    this.documentProcessEndDate,
+    this.documentProcessDuration,
+    this.documentProcessCost,
+    this.codeEtimad,
   });
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is ProjectDataModel &&
-          runtimeType == other.runtimeType &&
-          projectId == other.projectId &&
-          projectName == other.projectName &&
-          projectCode == other.projectCode &&
-          contactNumber == other.contactNumber &&
-          documentCode == other.documentCode &&
-          mFilePass == other.mFilePass &&
-          documentName == other.documentName &&
-          documentUrl == other.documentUrl &&
-          documentFileName == other.documentFileName &&
-          documentProcessStartDate == other.documentProcessStartDate &&
-          documentProcessEndDate == other.documentProcessEndDate &&
-          documentProcessDuration == other.documentProcessDuration &&
-          documentProcessCost == other.documentProcessCost);
-
-  @override
-  int get hashCode =>
-      projectId.hashCode ^
-      projectName.hashCode ^
-      projectCode.hashCode ^
-      contactNumber.hashCode ^
-      documentCode.hashCode ^
-      mFilePass.hashCode ^
-      documentName.hashCode ^
-      documentUrl.hashCode ^
-      documentFileName.hashCode ^
-      documentProcessStartDate.hashCode ^
-      documentProcessEndDate.hashCode ^
-      documentProcessDuration.hashCode ^
-      documentProcessCost.hashCode;
-
-  @override
-  String toString() {
-    return 'ProjectDataModel{ projectId: $projectId, projectName: $projectName, projectCode: $projectCode, contactNumber: $contactNumber, documentCode: $documentCode, mFilePass: $mFilePass, documentName: $documentName, documentUrl: $documentUrl, documentFileName: $documentFileName, documentProcessStartDate: $documentProcessStartDate, documentProcessEndDate: $documentProcessEndDate, documentProcessDuration: $documentProcessDuration, documentProcessCost: $documentProcessCost,}';
-  }
 
   ProjectDataModel copyWith({
     int? projectId,
@@ -75,6 +43,8 @@ class ProjectDataModel {
     String? projectCode,
     String? contactNumber,
     String? documentCode,
+    int? projectDocumentId,
+    String? codeOutSystemClass,
     String? mFilePass,
     String? documentName,
     String? documentUrl,
@@ -83,6 +53,7 @@ class ProjectDataModel {
     String? documentProcessEndDate,
     int? documentProcessDuration,
     double? documentProcessCost,
+    String? codeEtimad,
   }) {
     return ProjectDataModel(
       projectId: projectId ?? this.projectId,
@@ -90,6 +61,8 @@ class ProjectDataModel {
       projectCode: projectCode ?? this.projectCode,
       contactNumber: contactNumber ?? this.contactNumber,
       documentCode: documentCode ?? this.documentCode,
+      projectDocumentId: projectDocumentId ?? this.projectDocumentId,
+      codeOutSystemClass: codeOutSystemClass ?? this.codeOutSystemClass,
       mFilePass: mFilePass ?? this.mFilePass,
       documentName: documentName ?? this.documentName,
       documentUrl: documentUrl ?? this.documentUrl,
@@ -101,24 +74,122 @@ class ProjectDataModel {
       documentProcessDuration:
           documentProcessDuration ?? this.documentProcessDuration,
       documentProcessCost: documentProcessCost ?? this.documentProcessCost,
+      codeEtimad: codeEtimad ?? this.codeEtimad,
     );
+  }
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'projectId': projectId,
+      'projectName': projectName,
+      'projectCode': projectCode,
+      'contactNumber': contactNumber,
+      'documentCode': documentCode,
+      'projectDocumentId': projectDocumentId,
+      'codeOutSystemClass': codeOutSystemClass,
+      'mFilePass': mFilePass,
+      'documentName': documentName,
+      'documentUrl': documentUrl,
+      'documentFileName': documentFileName,
+      'documentProcessStartDate': documentProcessStartDate,
+      'documentProcessEndDate': documentProcessEndDate,
+      'documentProcessDuration': documentProcessDuration,
+      'documentProcessCost': documentProcessCost,
+      'codeEtimad': codeEtimad,
+    };
   }
 
   factory ProjectDataModel.fromMap(Map<String, dynamic> map) {
     return ProjectDataModel(
-      projectId: map['projectId'] as int?,
-      projectName: map['projectName'] as String?,
-      projectCode: map['projectCode'] as String?,
-      contactNumber: map['contactNumber'] as String?,
-      documentCode: map['documentCode'] as String?,
-      mFilePass: map['mFilePass'] as String?,
-      documentName: map['documentName'] as String?,
-      documentUrl: map['documentUrl'] as String?,
-      documentFileName: map['documentFileName'] as String?,
-      documentProcessStartDate: map['documentProcessStartDate'] ?? '',
-      documentProcessEndDate: map['documentProcessEndDate'] ?? '',
-      documentProcessDuration: map['documentProcessDuration'] ?? 0,
-      documentProcessCost: map['documentProcessCost'] ?? 0.0,
+      projectId: map['projectId'] != null ? map['projectId'] as int : null,
+      projectName:
+          map['projectName'] != null ? map['projectName'] as String : null,
+      projectCode:
+          map['projectCode'] != null ? map['projectCode'] as String : null,
+      contactNumber:
+          map['contactNumber'] != null ? map['contactNumber'] as String : null,
+      documentCode:
+          map['documentCode'] != null ? map['documentCode'] as String : null,
+      projectDocumentId: map['projectDocumentId'] != null
+          ? map['projectDocumentId'] as int
+          : null,
+      codeOutSystemClass: map['codeOutSystemClass'] != null
+          ? map['codeOutSystemClass'] as String
+          : null,
+      mFilePass: map['mFilePass'] != null ? map['mFilePass'] as String : null,
+      documentName:
+          map['documentName'] != null ? map['documentName'] as String : null,
+      documentUrl:
+          map['documentUrl'] != null ? map['documentUrl'] as String : null,
+      documentFileName: map['documentFileName'] != null
+          ? map['documentFileName'] as String
+          : null,
+      documentProcessStartDate: map['documentProcessStartDate'] != null
+          ? map['documentProcessStartDate'] as String
+          : null,
+      documentProcessEndDate: map['documentProcessEndDate'] != null
+          ? map['documentProcessEndDate'] as String
+          : null,
+      documentProcessDuration: map['documentProcessDuration'] != null
+          ? map['documentProcessDuration'] as int
+          : null,
+      documentProcessCost: map['documentProcessCost'] != null
+          ? map['documentProcessCost'] as double
+          : null,
+      codeEtimad:
+          map['codeEtimad'] != null ? map['codeEtimad'] as String : null,
     );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory ProjectDataModel.fromJson(String source) =>
+      ProjectDataModel.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  String toString() {
+    return 'ProjectDataModel(projectId: $projectId, projectName: $projectName, projectCode: $projectCode, contactNumber: $contactNumber, documentCode: $documentCode, projectDocumentId: $projectDocumentId, codeOutSystemClass: $codeOutSystemClass, mFilePass: $mFilePass, documentName: $documentName, documentUrl: $documentUrl, documentFileName: $documentFileName, documentProcessStartDate: $documentProcessStartDate, documentProcessEndDate: $documentProcessEndDate, documentProcessDuration: $documentProcessDuration, documentProcessCost: $documentProcessCost, codeEtimad: $codeEtimad)';
+  }
+
+  @override
+  bool operator ==(covariant ProjectDataModel other) {
+    if (identical(this, other)) return true;
+
+    return other.projectId == projectId &&
+        other.projectName == projectName &&
+        other.projectCode == projectCode &&
+        other.contactNumber == contactNumber &&
+        other.documentCode == documentCode &&
+        other.projectDocumentId == projectDocumentId &&
+        other.codeOutSystemClass == codeOutSystemClass &&
+        other.mFilePass == mFilePass &&
+        other.documentName == documentName &&
+        other.documentUrl == documentUrl &&
+        other.documentFileName == documentFileName &&
+        other.documentProcessStartDate == documentProcessStartDate &&
+        other.documentProcessEndDate == documentProcessEndDate &&
+        other.documentProcessDuration == documentProcessDuration &&
+        other.documentProcessCost == documentProcessCost &&
+        other.codeEtimad == codeEtimad;
+  }
+
+  @override
+  int get hashCode {
+    return projectId.hashCode ^
+        projectName.hashCode ^
+        projectCode.hashCode ^
+        contactNumber.hashCode ^
+        documentCode.hashCode ^
+        projectDocumentId.hashCode ^
+        codeOutSystemClass.hashCode ^
+        mFilePass.hashCode ^
+        documentName.hashCode ^
+        documentUrl.hashCode ^
+        documentFileName.hashCode ^
+        documentProcessStartDate.hashCode ^
+        documentProcessEndDate.hashCode ^
+        documentProcessDuration.hashCode ^
+        documentProcessCost.hashCode ^
+        codeEtimad.hashCode;
   }
 }

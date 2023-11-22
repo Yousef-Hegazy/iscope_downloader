@@ -6,7 +6,7 @@ import 'package:iscope_downloader/features/home/presentation/providers/data_sour
 import 'package:iscope_downloader/features/home/presentation/providers/file_provider.dart';
 
 final projectsDataProvider =
-    FutureProvider<List<ProjectDataEntity>>((ref) async {
+    FutureProvider.autoDispose<List<ProjectDataEntity>>((ref) async {
   final filePath = ref.watch(fileProvider);
   final source = ref.watch(dataSourceProvider);
   List<ProjectDataEntity> projectsData = [];

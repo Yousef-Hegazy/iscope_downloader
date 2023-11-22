@@ -13,6 +13,13 @@ enum DataSources {
   database,
 }
 
+class DownloadRes {
+  String message;
+  bool status;
+
+  DownloadRes({required this.message, required this.status});
+}
+
 class DownloadAndCreateXmlUseCase {
   final String downloadDirectory;
   final List<ProjectDataEntity> projects;
@@ -59,28 +66,38 @@ class DownloadAndCreateXmlUseCase {
     }
   }
 
-  Future<String> _downloadFile(ProjectDataEntity project) async {
+  Future<DownloadRes> _downloadFile(ProjectDataEntity project) async {
+    final downloadRes = DownloadRes(message: "", status: false);
     try {
       final downloadFile =
           File('$downloadDirectory\\${project.documentFileName}');
 
       if (await downloadFile.exists()) {
-        return '${downloadFile.path} already exists';
+        downloadRes.message = '${downloadFile.path} already exists';
+        downloadRes.status = false;
+        return downloadRes;
       }
 
       final Uint8List? fileBytes =
           await RemoteDataSource.downloadFile(url: project.documentUrl);
 
       if (fileBytes == null) {
-        return 'Failed to download file from ${project.documentUrl}';
+        downloadRes.message =
+            'Failed to download file from ${project.documentUrl}';
+        downloadRes.status = false;
+        return downloadRes;
       }
 
       await downloadFile.writeAsBytes(fileBytes);
 
-      return '${downloadFile.path} Done';
+      downloadRes.message = '${downloadFile.path} Done';
+      downloadRes.status = true;
+      return downloadRes;
     } catch (e) {
       debugPrint('failed to download file: ${e.toString()}');
-      return e.toString();
+      downloadRes.message = e.toString();
+      downloadRes.status = false;
+      return downloadRes;
     }
   }
 
@@ -96,10 +113,15 @@ class DownloadAndCreateXmlUseCase {
 
     final futuresList = projects.map((project) async {
       await pool.withResource(() async {
-        final xmlLog = await _createXml(project);
-        final downloadLog = await _downloadFile(project);
+        final downloadRes = await _downloadFile(project);
+        if (downloadRes.status) {
+          final xmlLog = await _createXml(project);
+          logMessage('$xmlLog\n${downloadRes.message}');
+        } else {
+          logMessage('$logSeparator\n${downloadRes.message}');
+        }
+
         increaseProgress();
-        logMessage('$xmlLog\n$downloadLog');
       });
     });
 
