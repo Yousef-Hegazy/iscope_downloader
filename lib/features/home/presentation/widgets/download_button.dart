@@ -5,6 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iscope_downloader/features/home/domain/usecases/download_and_create_xml_usecase.dart';
 import 'package:iscope_downloader/features/home/presentation/providers/providers.dart';
 
+const downloadBtnKey = Key('download');
+
 class DownloadButton extends ConsumerWidget {
   const DownloadButton({
     super.key,
@@ -66,48 +68,53 @@ class DownloadButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final downloading = ref.watch(downloadAndCreateXmlProvider).loading;
 
-    return InkWell(
-      onTap: downloading ? null : () => _handleDownloadClick(context, ref),
-      borderRadius: BorderRadius.circular(12),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-        decoration: BoxDecoration(
-          color: Colors.teal.shade600,
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: kElevationToShadow[4],
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            downloading
-                ? const SizedBox(
-                    height: 20,
-                    width: 20,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                      color: Colors.white,
-                    ),
-                  )
-                : const SizedBox(
-                    height: 20,
-                    width: 20,
-                    child: Icon(
-                      Icons.download_rounded,
-                      size: 20,
-                      color: Colors.white,
-                    )),
-            const SizedBox(
-              width: 10,
-            ),
-            const Text(
-              "تحميل",
-              style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white),
-            ),
-          ],
+    return Semantics(
+      label: "download",
+      enabled: true,
+      key: downloadBtnKey,
+      child: InkWell(
+        onTap: downloading ? null : () => _handleDownloadClick(context, ref),
+        borderRadius: BorderRadius.circular(12),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+          decoration: BoxDecoration(
+            color: Colors.teal.shade600,
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: kElevationToShadow[4],
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              downloading
+                  ? const SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: Colors.white,
+                      ),
+                    )
+                  : const SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: Icon(
+                        Icons.download_rounded,
+                        size: 20,
+                        color: Colors.white,
+                      )),
+              const SizedBox(
+                width: 10,
+              ),
+              const Text(
+                "تحميل",
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              ),
+            ],
+          ),
         ),
       ),
     );
